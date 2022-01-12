@@ -1,0 +1,108 @@
+import java.util.Scanner;
+
+public class agrJoga {
+    private areaJogo areaJogo;
+    private int rodada=1, vez=1;
+    private Jogador jogador2;
+    private Jogador jogador2;
+    public Scanner entrada = new Scanner(System.in);
+
+    
+    public agrJoga(){
+        areaJogo = new areaJogo();
+        iniciarJogadores();
+        
+        while( Jogar() );
+    }
+    
+    public void inicia(){
+        System.out.println(" Jogador 1 ?");
+        if(escolherJogador() == 1)
+            this.jogador2 = new real(1);
+        else
+            this.jogador2 = new robo(1);
+        
+        System.out.println("----------------------");
+        System.out.println(" Jogador 2 ?");
+        
+        if(escolherJogador() == 1)
+            this.jogador2 = new real(2);
+        else
+            this.jogador2 = new robo(2);
+        
+    }
+    
+    public int escolherJogador(){
+        int opcao=0;
+        
+        do{
+            System.out.println("1. real");
+            System.out.println("2. robo\n");
+            System.out.print("Opção: ");
+            opcao = entrada.nextInt();
+            
+            if(opcao != 1 && opcao != 2)
+                System.out.println("Opção inválida! Tente novamente");
+        }while(opcao != 1 && opcao != 2);
+        
+        return opcao;
+    }
+    
+    public boolean Jogar(){
+        if(ganhou() == 0 ){
+            System.out.println("----------------------");
+            System.out.println("\nRodada "+rodada);
+            System.out.println("É a vez do jogador " + vez() );
+            
+            if(vez()==1)
+                jogador2.jogar(areaJogo);
+            else
+                jogador2.jogar(areaJogo);
+            
+            
+            if(areaJogo.areaJogoCompleto()){
+                System.out.println("areaJogo Completo. agrJoga empatado");
+                return false;
+            }
+            vez++;
+            rodada++;
+
+            return true;
+        } else{
+            if(ganhou() == -1 )
+                System.out.println("Jogador 1 ganhou!");
+            else
+                System.out.println("Jogador 2 ganhou!");
+            
+            return false;
+        }
+            
+    }
+    
+    public int vez(){
+        if(vez%2 == 1)
+            return 1;
+        else
+            return 2;
+    }
+    
+    public int ganhou(){
+        if(areaJogo.Linha() == 1)
+            return 1;
+        if(areaJogo.Coluna() == 1)
+            return 1;
+        if(areaJogo.Diagonai() == 1)
+            return 1;
+        
+        if(areaJogo.Linha1() == -1)
+            return -1;
+        if(areaJogo.Coluna1() == -1)
+            return -1;
+        if(areaJogo.Diagonal1() == -1)
+            return -1;
+        
+        return 0;
+    }
+    
+    
+}
